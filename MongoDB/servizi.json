@@ -1,0 +1,44 @@
+[
+{
+    "nome": "san siro",
+    "luogo": "milano",
+    "servizi": {"metro":{"nome": "M5",                     "percorrenza": {"piedi": "5 minuti nemmeno", "auto":"5 minuti"}, "distanza":"8 km"},
+                "bar"  :{"nome": "bar vicino allo stadio", "percorrenza": {"piedi": "10 minuti",        "auto":"3 minuti"}, "distanza":"0,2 km"}}
+},
+
+{
+     "nome": "stadio olimpico",
+     "luogo": "roma",
+     "servizi": {"metro": {"nome": "fermata metro arancione", "percorrenza": {"piedi": "35 minuti", "auto":"8 minuti"}, "distanza": "3 km"},
+                 "bar":   {"nome": "bar river",               "percorrenza": {"piedi": "10 minuti", "auto":"5 minuti"}, "distanza": "0,8 km"}}
+},
+
+{
+    "nome": "opera oarlo felice genova",
+    "luogo": "genova",
+    "servizi": {"metro":      {"nome": "de ferrari",         "percorrenza": {"piedi": "1 minuto"}, "distanza": "50 metri"},
+                "parcheggio": {"nome": "largo delle fucine", "percorrenza": {"piedi": "1 minuto"}, "distanza": "64 metri"},
+                "osteria":    {"nome": "hosteria ducale",    "percorrenza": {"piedi": "1 minuto"}, "distanza": "120 metri"}}
+},
+
+{
+    "nome" : "grana padano arena",
+    "luogo": "mantova",
+    "servizi": {"bus":      {"nome": "boccabusa", "linea": "6-12",        "percorrenza" : {"piedi": "5 minuti", "auto": "2 minuti"}, "distanza": "500 metri"},
+                "festival": {"nome": "festival della cucina mantonavana", "percorrenza":  {"piedi": "3 minuti"},                     "distanza": "300 metri"}}
+},
+
+{
+    "nome": "teatro sis_play c/o brixia forum",
+    "luogo": "brescia",
+    "servizi": {"autobus": {"nome": "S203 - fiera", "perocrrenza": {"piedi" : "8 minuti", "auto":"2 minuti"}, "distanza": "0,7 km"},
+                "bar":     {"nome": "tower pub",    "percorrenza": {"piedi" : "5 minuti", "auto":"3 minuti"}, "distanza": "0,9 km"}}
+},
+
+{
+ "nome": "teatro san carlo",
+ "luogo": "napoli",
+    "servizi": {"metro": {"nome": "linea 1",                       "perocrrenza": {"piedi" : "5 minuti", "auto":"2 minuti"}, "distanza": "0,4 km"},
+                "bar":   {"nome": "il vero bar del professore",    "percorrenza": {"piedi" : "2 minuti", "auto":"6 minuti"}, "distanza": "0,5 km"}}
+}
+]
