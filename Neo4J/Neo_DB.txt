@@ -1,0 +1,113 @@
+CREATE(s:stato {nome:"italia"})
+
+CREATE(ROSIL01ISOLD09OL:p {nome:"astolfo",
+    cognome: "rossi",
+    cf: "ROSIL01ISOLD09OL",
+    stato: "vivo",
+    eta: 90 })
+ 
+CREATE(ROSIL11ISOLD09OL:p {nome:"gianni",
+    cognome: "rossi",
+    cf: "ROSIL11ISOLD09OL",
+    stato: "vivo",
+    eta: 53 })
+ 
+CREATE(ROSILA1ISOLD09OL:p {nome:"sara",
+    cognome: "verdi",
+    cf: "ROSILA1ISOLD09OL",
+    stato: "vivo",
+    eta: 50 })
+ 
+CREATE(ROSIL21ISOLD09OL:p {nome:"rebecca",
+    cognome: "rossi",
+    cf: "ROSIL21ISOLD09OL",
+    stato: "vivo",
+    eta: 12})
+ 
+CREATE(ROSIL22ISOLD09OL:p {nome:"bruno",
+    cognome: "rossi",
+    cf: "ROSIL22ISOLD09OL",
+    stato: "vivo",
+    eta: 18})
+ 
+CREATE(ROSIL23ISOLD09OL:p {nome:"alfio",
+    cognome: "rossi",
+    cf: "ROSIL23ISOLD09OL",
+    stato: "vivo",
+    eta: 23 })
+ 
+CREATE(ROSIL12ISOLD09OL:p {nome:"roberto",
+    cognome: "rossi",
+    cf: "ROSIL12ISOLD09OL",
+    stato: "vivo",
+    eta: 50 })
+ 
+CREATE(ROSILA2ISOLD09OL:p {nome:"elisa",
+    cognome: "bianchi",
+    cf: "ROSILA2ISOLD09OL",
+    stato: "vivo",
+    eta: 49 })
+ 
+CREATE(ROSIL24ISOLD09OL:p {nome:"nicol",
+    cognome: "rossi",
+    cf: "ROSIL24ISOLD09OL",
+    stato: "vivo",
+    eta: 12 })
+ 
+CREATE(ROSIL25ISOLD09OL:p {nome:"erica",
+    cognome: "rossi",
+    cf: "ROSIL25ISOLD09OL",
+    stato: "vivo",
+    eta: 11 })
+ 
+CREATE(bi0:b {nome: "casa sulle alpi",
+                valore: 500000,
+				codice:'bi0'})
+ 
+CREATE(bi1:b {nome: "casa sul mare",
+                valore: 400000,
+				codice:'bi1'})
+ 
+CREATE(bm0:b {nome: "alfa giulia",
+                valore: 40000,
+				codice:'bm0'})
+ 
+CREATE(bm1:b {nome: "audi a3",
+                valore: 28000,
+				codice:'bm1'})
+ 
+CREATE(cc0:b {nome: "conto intesa",
+                valore: 4000,
+				codice:'cc0'})
+ 
+CREATE(ROSIL01ISOLD09OL)-[g1:Genera {value: 1}]->(ROSIL11ISOLD09OL)
+CREATE(ROSIL01ISOLD09OL)-[g2:Genera {value: 1}]->(ROSIL12ISOLD09OL)
+ 
+CREATE(ROSIL11ISOLD09OL)-[s1:SposatoCon {value: 0}]->(ROSILA1ISOLD09OL)
+ 
+CREATE(ROSIL11ISOLD09OL)-[g3:Genera {value: 1}]->(ROSIL21ISOLD09OL)
+CREATE(ROSIL11ISOLD09OL)-[g4:Genera {value: 1}]->(ROSIL22ISOLD09OL)
+CREATE(ROSIL11ISOLD09OL)-[g5:Genera {value: 1}]->(ROSIL23ISOLD09OL)
+ 
+CREATE(ROSILA1ISOLD09OL)-[g6:Genera {value: 1}]->(ROSIL21ISOLD09OL)
+CREATE(ROSILA1ISOLD09OL)-[g7:Genera {value: 1}]->(ROSIL22ISOLD09OL)
+CREATE(ROSILA1ISOLD09OL)-[g8:Genera {value: 1}]->(ROSIL23ISOLD09OL)
+ 
+CREATE(ROSIL12ISOLD09OL)-[s2:SposatoCon {value: 0}]->(ROSILA2ISOLD09OL)
+ 
+CREATE(ROSIL12ISOLD09OL)-[g9:Genera {value: 1}]->(ROSIL24ISOLD09OL)
+CREATE(ROSIL12ISOLD09OL)-[g10:Genera {value: 1}]->(ROSIL25ISOLD09OL)
+ 
+CREATE(ROSILA2ISOLD09OL)-[g11:Genera {value: 1}]->(ROSIL24ISOLD09OL)
+CREATE(ROSILA2ISOLD09OL)-[g12:Genera {value: 1}]->(ROSIL25ISOLD09OL)
+ 
+CREATE(ROSIL01ISOLD09OL)-[:Possiede {value: 100.00}]->(bi0)
+CREATE(ROSIL11ISOLD09OL)-[:Possiede {value: 100.00}]->(bi1)
+CREATE(ROSIL12ISOLD09OL)-[:Possiede {value: 100.00}]->(bi1)
+CREATE(ROSIL11ISOLD09OL)-[:Possiede {value: 100.00}]->(bm0)
+CREATE(ROSIL12ISOLD09OL)-[:Possiede {value: 100.00}]->(bm1)
+CREATE(ROSIL12ISOLD09OL)-[:Possiede {value: 100.00}]->(cc0)
+ 
+
+
+RETURN *
