@@ -2,7 +2,7 @@ from neo4j import GraphDatabase
 
 class Connection:
     def __init__(self, neo4j_uri, neo4j_username, neo4j_password):
-        print(f"Connecting to the database {neo4j_uri}.")
+        print(f"Connecting to the database {neo4j_uri}....")
         self.driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_username, \
                                                             neo4j_password))
         print(f"Connect to the database {neo4j_uri}.")
@@ -30,15 +30,16 @@ def menu(connection:Connection):
     driver = connection.driver
     isfromc = False
     while True:
-        print("_-" * 48 + "\n"
-              'Welcome in the notaril support, choose an option:\n\t'
-              '- Show the property of a live person                                   - a\n\t'
-              '- Show the nearest parent in life of a person                          - b\n\t'
-              '- Show the new property considering the departue of a person           - c\n\t'
-              '- Exit                                                                 - every other key\n'
-              + "_-" * 48)
+        print("=" * 100 + "\n"
+              'Menu\n\t'
+              'Welcome to the notarial support. Please choose an option:\n\t'
+              '- Show the property of a living person.                                 - a\n\t'
+              '- Show the nearest living relative of a person.                         - b\n\t'
+              '- Show the new property considering the departure of a person.          - c\n\t'
+              '- Exit                                                                  - every other key\n'
+              + "=" * 100)
         try:
-            guess = str(input('Your choice:_'))
+            guess = str(input('Your choice: > '))
             break
         except Exception as e:
             print(f'Something went wrong:{e}')
@@ -77,16 +78,19 @@ def possessions(connect:Connection):
         printobj.append(item)
         
     if len(printobj):
-        print(f'Items possessed by {i[1]} {i[2]}:\n'
-              f'-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_\
-                  -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-')
+        print(f'\n Items possessed by {i[1]} {i[2]}:\n')
+        print("=" * 100 + "\n")
         for item in printobj:
-             print(f'Item name: {item["a.name"]}\tValue of the item: \
-                    {item["a.value"]}€\n'
-                  f'Percentage of item possession: {item["r.value"]}\t \
-            Calculated value:{item["a.value"]/100*item["r.value"]}')
+             print(f'--------------------------------------\n'
+                   f'Item name: {item["a.name"]}\n'
+                   f'--------------------------------------\n'
+                   f'Value of the item: {item["a.value"]}€\n'
+                   f'Percentage of item possession: {item["r.value"]}\n'
+                   f'Calculated value:{item["a.value"]/100*item["r.value"]}\n')
     else:
-        print(f"{i[1]} {i[2]} don't have any item")
+        print(f'--------------------------------------\n'
+              f"{i[1]} {i[2]} don't have any items\n"
+              f'--------------------------------------\n')
     
     final_control()
         
@@ -137,8 +141,8 @@ def relatives(person_fromc, isfromc):
  
     if len(heirs):
         if printv == True:
-            print(f" If {i[1]} where to be missing is good will go to \
-                  {heirs[0][0]} {heirs[0][1]}, the cosort.")
+            print(f"If {i[1]} where to be missing the good will go to "
+                  f'{heirs[0][0]} {heirs[0][1]}, the consort.')
         list_heirs = to_list(heirs, control, i)
     else:
         if printv == True:
@@ -149,12 +153,12 @@ def relatives(person_fromc, isfromc):
             
         if len(heirs):
             if printv == True:
-                print(f"If {i[1]} where to be missing is good will go to \
-                        they son/s: ")
+                print(f"If {i[1]} where to be missing is good will go to "
+                      f"his son/s: ")
             try:
                 for i in heirs:
                     if printv == True:
-                        print(f"----->{i['a.name']}")
+                        print(f"-----> {i['a.name']}")
             except KeyError:
                 print("")
         else:
@@ -165,8 +169,9 @@ def relatives(person_fromc, isfromc):
             list_heirs = to_list(heirs, control, i)
             if len(heirs):
                 if printv == True:
-                    print(f"If{i[1]} where to be missing is good will go to\
-                            parents and siblings: ")
+                    print(f"If {i[1]} where to be missing is good will go to " 
+                          f"parents and siblings: "
+                          f'{"=" * 100}')
                 prec_gen=None
                 prec_sons=None   
                 try:
@@ -231,29 +236,29 @@ def departure():
                 try:
                     for heirs in heirs:
                         query="create (" + str(heirs['id']) + ":p)\
-                            -[:Owns{value:" + str(percent_own_ereditors) + "\
-                                        }]->("+items['a.code']+":b)"
+                              -[:Owns{value:" + str(percent_own_ereditors) + "\
+                               }]->("+items['a.code']+":b)"
                         session.run(query)
-                        print(f"The goods {items['a.name']} will be inherited\
-                               by {heirs['name']} {heirs['surname']} for the \
-                              {round(percent_own_ereditors, 2)}% of \
-                            is value, so {items['a.value']/len(heirs)}€")
+                        print(f"The goods {items['a.name']} will be inherited " 
+                              f"by {heirs['name']} {heirs['surname']} for the " 
+                              f"{round(percent_own_ereditors, 2)}% of "
+                              f"is value, so {items['a.value']/len(heirs)}€")
                 except KeyError:
                     print("")
         else:
-            print(f"{i['p.name']} did not have any heirs, the goods\
-                    will go to the State")
+            print(f"{i['p.name']} did not have any heirs, the goods "
+                  f"will go to the State")
             for items in possessions:
-                query = "create (s:country {name:'italia'})-[:Owns\
+                query = "create (s:country {name:'italy'})-[:Owns\
                 {value:" + items['r.value'] + "}]->("+items['a.code'] + ":b)"
                 session.run(query)
                 print(
-                    f"The goods {items['a.name']} will be inherit by the italian\
-                      State, for the {items['r.value']}% correspond to,\
-                      {items['a.value']}€")
+                    f"The goods {items['a.name']} will be inherit by the italian "
+                    f"State, for the {items['r.value']}% correspond to,"
+                    f"{items['a.value']}€")
 
     else:
-        print(f"{i['p.name']} dind't have any goods")
+        print(f"{i['p.name']} Didn't have any goods")
     session.run("match(p: p {id:'" + str(person) + "'}) set p.status = 'dead'")
 
 # ============================================================================
@@ -338,7 +343,7 @@ def initialize_id():
     driver = connect.driver
     session = driver.session()
     try:
-        person = str(input('Insert the id\n_'))
+        person = str(input('Insert the id\n> '))
     except Exception as e:
         print(f'Something went wrong: {e}')
     
@@ -476,12 +481,12 @@ def final_control():
     the menu, if any others key is pressed exit the program.
 
     '''
-    
-    print("-_" * 48)
+    print("\t")
+    print("=" * 100)
     print("Press 0 for exit or every other key to reach the menu")
     
     try:
-        guess = str(input('_'))
+        guess = str(input(' >'))
     except Exception as e:
         print(f'Something went wrong: {e}')
     if guess!= "0":

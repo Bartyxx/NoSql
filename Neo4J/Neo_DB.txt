@@ -1,4 +1,4 @@
-CREATE(s:country {name:"italia"})
+CREATE(s:country {name:"italy"})
 
 CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",
     surname: "rossi",
@@ -60,11 +60,11 @@ CREATE(ROSIL25ISOLD09OL:p {name:"erica",
     status: "alive",
     age: 11 })
  
-CREATE(bi0:b {name: "casa sulle alpi",
+CREATE(bi0:b {name: "house in the Alps",
                 value: 500000,
 				code:'bi0'})
  
-CREATE(bi1:b {name: "casa sul mare",
+CREATE(bi1:b {name: "house on the sea",
                 value: 400000,
 				code:'bi1'})
  
@@ -76,7 +76,7 @@ CREATE(bm1:b {name: "audi a3",
                 value: 28000,
 				code:'bm1'})
  
-CREATE(cc0:b {name: "conto intesa",
+CREATE(cc0:b {name: "bank account intesa",
                 value: 4000,
 				code:'cc0'})
  
