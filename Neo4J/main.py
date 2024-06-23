@@ -16,12 +16,12 @@ class Connection:
 def menu(connection:Connection):
     '''
 
-    Menu of the programs.
-    It's possible to choose 4 option, after the selection the users need to 
-    insert the fiscal code of the interested person, the option are:
+    Menu of the program.
+    It's possible to choose 4 option, after the selection the user need to 
+    insert the id of the interested person, the option are:
         a - To show the property of the interested person.
         b - To show the nearest parents in life of the interested person.
-        c - To change the statust of the interested person from live to death.
+        c - To change the status of the interested person from live to death.
             it also change the goods property to the parents shown in point b.
         any other key - to exit from the program.
 
@@ -57,7 +57,7 @@ def possessions(connect:Connection):
     '''
     
     This function show all the property of the iterested person. The cypher 
-    query return name and value of the goods(a.nome, a.valore) and the 
+    query return name and value of the goods(a.name, a.value) and the 
     connection from the interested person to the goods(r.value).
     
     '''
@@ -65,10 +65,10 @@ def possessions(connect:Connection):
     driver = connect.driver
     session = driver.session()
     
-    person, counter, iterable_result, i, result = initialize_cf()
-    control_cf(person, counter)            
+    person, counter, iterable_result, i, result = initialize_id()
+    control_id(person, counter)            
 
-    query_string = 'MATCH(p:p{cf:"' + i[0] + '"})-[r: Possiede]->(a) return a.nome, a.valore, r.value'
+    query_string = 'MATCH(p:p{id:"' + i[0] + '"})-[r: Owns]->(a) return a.name, a.value, r.value'
     query = session.run(query_string)
     query_iterable = iter(query)
     
@@ -81,10 +81,10 @@ def possessions(connect:Connection):
               f'-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_\
                   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-')
         for item in printobj:
-             print(f'Item name: {item["a.nome"]}\tValue of the item: \
-                    {item["a.valore"]}€\n'
+             print(f'Item name: {item["a.name"]}\tValue of the item: \
+                    {item["a.value"]}€\n'
                   f'Percentage of item possession: {item["r.value"]}\t \
-            Calculated value:{item["a.valore"]/100*item["r.value"]}')
+            Calculated value:{item["a.value"]/100*item["r.value"]}')
     else:
         print(f"{i[1]} {i[2]} don't have any item")
     
@@ -102,13 +102,13 @@ def relatives(person_fromc, isfromc):
     'Regole di successione con query cypher.txt'
     
     The cypher query used are 3:
-    consort -> return name and surname of the consort (a.nome, a.cognome) and
+    consort -> return name and surname of the consort (a.name, a.surname) and
                the name of the interested person (p.consort).
-    sons    -> retunr name, surname, fiscal code off all the sons (a.nome, 
-               a.cognome, a.cf) and the name of the interested person (p.consort)
-    parbro -> return name, surname, fiscal code of the parents (a.nome, 
-              a.cognome, a.cf), name, surname, fiscal code of the siblings 
-              (b.nome, b.cognome, b.cf), name of the interested persone (p.nome).
+    sons    -> retunr name, surname, id off all the sons (a.name, 
+               a.surname, a.id) and the name of the interested person (p.consort)
+    parbro -> return name, surname, id of the parents (a.name, 
+              a.surname, a.id), name, surname, id of the siblings 
+              (b.name, b.surname, b.id), name of the interested persone (p.name).
               
     This function it's also used in the departure function to control the
     nearest ereditors in life. It's passed a variable name isfromc, if the 
@@ -119,18 +119,18 @@ def relatives(person_fromc, isfromc):
     '''
         
     if isfromc == False:
-        person, counter, iterable_result, i, result = initialize_cf()
-        control_cf(person, counter)
+        person, counter, iterable_result, i, result = initialize_id()
+        control_id(person, counter)
         printv = True
     else: 
         person = person_fromc
-        counter, iterable_result, i, result = initialize_cf_c(person)
-        control_cf(person, counter)
+        counter, iterable_result, i, result = initialize_id_c(person)
+        control_id(person, counter)
         printv = False
         
-    query_consort = "MATCH (p:p{cf:'"+ str(person)+"'})-[:SposatoCon]-(a) RETURN a.nome, a.cognome, p.nome"
-    query_sons = "MATCH (p:p{cf:'"+ str(person)+"'})-[:Genera]->(a) RETURN a.nome, a.cognome, a.cf, p.nome"
-    query_parbro = "MATCH(p:p{cf:'" + str(person)+"'})<-[:Genera]-(a:p)-[:Genera]->(b:p) RETURN a.nome, a.cognome, a.cf, p.nome,b.nome, b.cognome, b.cf"
+    query_consort = "MATCH (p:p{id:'"+ str(person)+"'})-[:SposatoCon]-(a) RETURN a.name, a.surname, p.name"
+    query_sons = "MATCH (p:p{id:'"+ str(person)+"'})-[:Generate]->(a) RETURN a.name, a.surname, a.id, p.name"
+    query_parbro = "MATCH(p:p{id:'" + str(person)+"'})<-[:Generate]-(a:p)-[:Generate]->(b:p) RETURN a.name, a.surname, a.id, p.name,b.name, b.surname, b.id"
     
     control = "consort"
     heirs = function_heirs(query_consort)
@@ -154,7 +154,7 @@ def relatives(person_fromc, isfromc):
             try:
                 for i in heirs:
                     if printv == True:
-                        print(f"----->{i['a.nome']}")
+                        print(f"----->{i['a.name']}")
             except KeyError:
                 print("")
         else:
@@ -171,14 +171,14 @@ def relatives(person_fromc, isfromc):
                 prec_sons=None   
                 try:
                     for i in heirs:
-                        if i['a.nome']!=prec_gen:
+                        if i['a.name']!=prec_gen:
                             if printv == True:
-                                print(f"--parent--> {i['a.nome']}")
-                            prec_gen = i['a.nome']
-                        if i['b.nome']!=prec_sons:
+                                print(f"--parent--> {i['a.name']}")
+                            prec_gen = i['a.name']
+                        if i['b.name']!=prec_sons:
                             if printv == True:
-                                print(f"--siblings--> {i['b.nome']}")
-                            prec_sons = i['b.nome']
+                                print(f"--siblings--> {i['b.name']}")
+                            prec_sons = i['b.name']
                 except KeyError:
                     print("")
             else:
@@ -197,9 +197,9 @@ def departure():
     The succession rule are the same of the parents function, so the parent
     function it's called to decide the ereditors and the variable isfromc is
     passed.
-    The cypher query return name, code and value of the goods (a.nome, a.codice, 
-    a.valore), the value in percentage of the goods (r.value) and the name of
-    the interested person(p.nome).
+    The cypher query return name, code and value of the goods (a.name, a.code, 
+    a.value), the value in percentage of the goods (r.value) and the name of
+    the interested person(p.name).
     
     If a person dosn't have any ereditor than the goods are assign to the 
     State.
@@ -209,11 +209,11 @@ def departure():
     driver = connect.driver
     session = driver.session()
 
-    person, counter, iterable_result, i, result = initialize_cf()
-    control_cf(person, counter)
+    person, counter, iterable_result, i, result = initialize_id()
+    control_id(person, counter)
     
 
-    query_string = 'MATCH(p:p{cf:"' + str(i[0]) + '"})-[r: Possiede]->(a) RETURN a.nome,a.codice, a.valore, r.value, p.nome'
+    query_string = 'MATCH(p:p{id:"' + str(i[0]) + '"})-[r: Owns]->(a) RETURN a.name,a.code, a.value, r.value, p.name'
     
     result_possession = session.run(query_string)
     iter_possession = iter(result_possession)
@@ -230,31 +230,31 @@ def departure():
                 percent_own_ereditors = round(items['r.value'] / len(heirs),2)
                 try:
                     for heirs in heirs:
-                        query="create (" + str(heirs['cf']) + ":p)\
-                            -[:Possiede{value:" + str(percent_own_ereditors) + "\
-                                        }]->("+items['a.codice']+":b)"
+                        query="create (" + str(heirs['id']) + ":p)\
+                            -[:Owns{value:" + str(percent_own_ereditors) + "\
+                                        }]->("+items['a.code']+":b)"
                         session.run(query)
-                        print(f"The goods {items['a.nome']} will be inherited\
-                               by {heirs['nome']} {heirs['cognome']} for the \
+                        print(f"The goods {items['a.name']} will be inherited\
+                               by {heirs['name']} {heirs['surname']} for the \
                               {round(percent_own_ereditors, 2)}% of \
-                            is value, so {items['a.valore']/len(heirs)}€")
+                            is value, so {items['a.value']/len(heirs)}€")
                 except KeyError:
                     print("")
         else:
-            print(f"{i['p.nome']} did not have any heirs, the goods\
+            print(f"{i['p.name']} did not have any heirs, the goods\
                     will go to the State")
             for items in possessions:
-                query = "create (s:stato {nome:'italia'})-[:Possiede\
-                {value:" + items['r.value'] + "}]->("+items['a.codice'] + ":b)"
+                query = "create (s:country {name:'italia'})-[:Owns\
+                {value:" + items['r.value'] + "}]->("+items['a.code'] + ":b)"
                 session.run(query)
                 print(
-                    f"The goods {items['a.nome']} will be inherit by the italian\
+                    f"The goods {items['a.name']} will be inherit by the italian\
                       State, for the {items['r.value']}% correspond to,\
-                      {items['a.valore']}€")
+                      {items['a.value']}€")
 
     else:
-        print(f"{i['p.nome']} dind't have any goods")
-    session.run("match(p: p {cf:'" + str(person) + "'}) set p.stato = 'morto'")
+        print(f"{i['p.name']} dind't have any goods")
+    session.run("match(p: p {id:'" + str(person) + "'}) set p.status = 'dead'")
 
 # ============================================================================
 def arrange_query_person(a: iter) -> dict:
@@ -269,19 +269,19 @@ def arrange_query_person(a: iter) -> dict:
     c = 0
     print(a)
     for line in a:
-        l['p' + str(c)] = {'nome': line['p.nome'], 'cognome': line['p.cognome'], 'cf': line['p.cf'],'età':['p.eta']}
+        l['p' + str(c)] = {'name': line['p.name'], 'surname': line['p.surname'], 'id': line['p.id'],'età':['p.age']}
         c += 1
     return l
 
 # ============================================================================
-def control_cf(person, counter):
+def control_id(person, counter):
     '''
     
     This function is used in the three main function to control(when the fiscal
     code is asked):
-    - cf len.
-    - existence of the cf.
-    - presente of equal cf.
+    - id len.
+    - existence of the id.
+    - presente of equal id.
     
     Then in case of Error gives to possibility at the users to exit from the
     progrm or of return to the menu.
@@ -289,14 +289,14 @@ def control_cf(person, counter):
     '''
     
     if len(person) != 16:
-        print("The fiscal code must be of length 16.")
+        print("The id must be of length 16.")
         error = True
     elif counter == 0:
-        print("There are no alive person with this fiscal code in our databases.")
+        print("There are no alive person with this id in our databases.")
         error = True
     elif counter > 1:
-        print("There are more person with the same fiscal code in our databases!")
-        print("There have been some mistake, the fiscal code should be unique!")
+        print("There are more person with the same id in our databases!")
+        print("There have been some mistake, the id should be unique!")
         error = True
 
     try:
@@ -317,17 +317,17 @@ def control_cf(person, counter):
     return 
 
 # ============================================================================
-def initialize_cf():
+def initialize_id():
     '''
     
-    This function is used in the three main function for asking the fiscal code.
-    After the insertion of the fiscal code it's checkd with the control_cf
+    This function is used in the three main function for asking the id.
+    After the insertion of the id it's checkd with the control_id
     function.
     
     RETURN:
-        - cf               -> fiscal code inserted
+        - id               -> id inserted
         - counter          -> in case there is more than one persone with the 
-                              same cf.
+                              same id.
         - iterable_results -> the iteration of the query.
         - i                -> the last value in iterable_result, if the query
                               is empty i is assigned to 0.
@@ -338,13 +338,13 @@ def initialize_cf():
     driver = connect.driver
     session = driver.session()
     try:
-        person = str(input('Insert the fiscal code\n_'))
+        person = str(input('Insert the id\n_'))
     except Exception as e:
         print(f'Something went wrong: {e}')
     
     session = driver.session()
-    result = session.run("match (p:p{cf:'"+str(person)+"',stato:'vivo'})\
-                         return p.cf,p.nome,p.cognome,p.stato,p.eta")
+    result = session.run("match (p:p{id:'"+str(person)+"',status:'alive'})\
+                         return p.id,p.name,p.surname,p.status,p.age")
     iterable_result = iter(result)
     counter = 0
     
@@ -359,14 +359,14 @@ def initialize_cf():
     return person, counter, iterable_result, i, result
   
 # ============================================================================      
-def initialize_cf_c(person):
+def initialize_id_c(person):
     '''
     
-    Same of the initialize_cf function but dosn't return person.
-    It's not possibile to use initialize_cf because ask for the cf, but the 
-    function initialize_cf as been already called when the users choose the c
-    function so another fuction for initialize the cf is needed without to ask
-    for the cf.
+    Same of the initialize_id function but dosn't return person.
+    It's not possibile to use initialize_id because ask for the id, but the 
+    function initialize_id as been already called when the users choose the c
+    function so another fuction for initialize the id is needed without to ask
+    for the id.
 
     '''
     
@@ -374,8 +374,8 @@ def initialize_cf_c(person):
     session = driver.session()
     
     session = driver.session()
-    result = session.run("match (p:p{cf:'"+str(person)+"',stato:'vivo'})\
-                         return p.cf,p.nome,p.cognome,p.stato,p.eta")
+    result = session.run("match (p:p{id:'"+str(person)+"',status:'alive'})\
+                         return p.id,p.name,p.surname,p.status,p.age")
     iterable_result = iter(result)
     counter = 0
     
@@ -423,7 +423,7 @@ def to_list(f_heirs, control, i):
         sons and parbro.
     i : value
         The actual value of the iteration in iterable_result in the function 
-        initialize_cf.
+        initialize_id.
 
     Returns
     -------
@@ -451,20 +451,20 @@ def to_list(f_heirs, control, i):
     heirs = list()
     if control == "consort":
         for i in consort:
-            heirs.append({'nome': i[0], 'cognome': i[1], 'relazione': 'coniuge'})
+            heirs.append({'name': i[0], 'surname': i[1], 'relationship': 'spouse'})
     if control == "sons":
         for i in sons:
-            heirs.append({'nome': i[0], 'cognome': i[1], 'cf': i[2], 'relazione': 'figlio/a'})
+            heirs.append({'name': i[0], 'surname': i[1], 'id': i[2], 'relationship': 'son/daughter'})
     if control == "parbro":
         prec_gen = None
         prec_bro = None
         for i in parbro:
-            if i['a.nome'] != prec_gen:
-                heirs.append({'nome': i['a.nome'], 'cognome': i['a.cognome'], 'cf': i['a.cf'], 'relazione': 'genitore'})
-                prec_gen = i['a.nome']
-            if i['b.nome'] != prec_bro:
-                heirs.append({'nome': i['b.nome'], 'cognome': i['b.cognome'], 'cf': i['b.cf'],'relazione': 'fratello/sorella'})
-                prec_bro = i['b.nome']
+            if i['a.name'] != prec_gen:
+                heirs.append({'name': i['a.name'], 'surname': i['a.surname'], 'id': i['a.id'], 'relationship': 'parent'})
+                prec_gen = i['a.name']
+            if i['b.name'] != prec_bro:
+                heirs.append({'name': i['b.name'], 'surname': i['b.surname'], 'id': i['b.id'],'relationship': 'brother/sister'})
+                prec_bro = i['b.name']
     list_heirs = list(heirs)
     return list_heirs
 
