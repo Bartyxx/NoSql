@@ -4,3 +4,4 @@
 - Capire perche comando non funziona.
 - Correggere i commenti.
 - Se finito compilare file MD.
+- Capire come aggiustare i commit
