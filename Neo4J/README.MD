@@ -151,10 +151,10 @@ There is one type of relationship:<br/>
 <hr>
 <h2>Graph</h2><br/>
 
-An example of the graph created: 
+An example of the graph created: <br/>
 <p><img src = "https://github.com/Bartyxx/NoSql/tree/main/Neo4J/img/completeGraph.png"/></p>
 
-
+<br/>
 
 
 
