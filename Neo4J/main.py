@@ -269,10 +269,12 @@ def departure():
 # ============================================================================
 def arrange_query_person(a: iter) -> dict:
     '''
+    
     :param a: iter (result of a Neo4j query)
     :return: dict of person
     
     Given a Neo4j object, it returns a dict.
+    
     '''
     
     l = {}
