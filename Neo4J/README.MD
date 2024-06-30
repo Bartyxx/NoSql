@@ -9,7 +9,6 @@
 <h3>Element description</h3>
 <table>
 <caption>The dataset is composed by five type of data</caption>
-<tr><td><b>ID</b></td><td><b>Type</b>       </td></tr>
 <tr><td>p        </td><td>Person            </td></tr>
 <tr><td>bi       </td><td>Immobiliar goods </td></tr>
 <tr><td>bm       </td><td>Mobiliar goods    </td></tr>
@@ -23,20 +22,19 @@
 -------------------------------------------------------------------------------
 <br/>
 
-An example of person is:
+An example of person is:<br/>
 
-CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",
-    surname: "rossi",
-    id: "ROSIL01ISOLD09OL",
-    status: "alive",
-    age: 90 })
+<i>CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",
+       surname: "rossi",
+       id: "ROSIL01ISOLD09OL",
+       status: "alive",
+       age: 90 })</i><br/>
 
 Where ROSIL01ISOLD09OL is the unique key that identify the person, is the same
-of the id.
+of the id.<br/>
 
 <table>
 <caption>Person attribute</caption>
-<tr><td><b>ID</b></td><td><b>Description</b>                </td></tr>
 <tr><td>name     </td><td>Name of the persone               </td></tr>
 <tr><td>surname  </td><td>Surname of the person             </td></tr>
 <tr><td>id       </td><td>Identification code of the person </td></tr>
@@ -46,19 +44,18 @@ of the id.
    
 <br/>  
 -------------------------------------------------------------------------------
-<h4>Immobial good(bi)</h4>
+<h4>Immobiliar good(bi)</h4>
 -------------------------------------------------------------------------------
 <br/>
 
-CREATE(bi0:b {name: "house in the Alps",
+<i>CREATE(bi0:b {name: "house in the Alps",
                 value: 500000,
-				code:'bi0'})
+				code:'bi0'})</i><br/>
 
-Where bi0 id the unique identification of the immobiar good
+Where bi0 id the unique identification of the immobiar good<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
-<tr><td><b>ID</b></td><td><b>Description</b>                     </td></tr>
 <tr><td>name     </td><td>Name of the goods                      </td></tr>
 <tr><td>value    </td><td>Value in euro                          </td></tr>
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
@@ -70,16 +67,15 @@ Where bi0 id the unique identification of the immobiar good
 -------------------------------------------------------------------------------
 <br/>
 
-CREATE(bm0:b {name: "alfa giulia",
+<i>CREATE(bm0:b {name: "alfa giulia",
                 value: 40000,
-				code:'bm0'})
+				code:'bm0'})</i><br/>
 
 
-Where bm0 id the unique identification of the mobiliar good
+Where bm0 id the unique identification of the mobiliar good<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
-<tr><td><b>ID</b></td><td><b>Description</b>                     </td></tr>
 <tr><td>name     </td><td>Name of the goods                      </td></tr>
 <tr><td>value    </td><td>Value in euro                          </td></tr>
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
@@ -91,15 +87,15 @@ Where bm0 id the unique identification of the mobiliar good
 -------------------------------------------------------------------------------
 <br/>
 
+CREATE(bm0:b {name: "alfa giulia",
 CREATE(cc0:b {name: "bank account intesa",
                 value: 4000,
-				code:'cc0'})
+				code:'cc0'})</i><br/>
 
-Where cc0 id the unique identification of the bank account
+Where cc0 id the unique identification of the bank account<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
-<tr><td><b>ID</b></td><td><b>Description</b>                     </td></tr>
 <tr><td>name     </td><td>Name of bank account                   </td></tr>
 <tr><td>value    </td><td>Money in the bank account              </td></tr>
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
