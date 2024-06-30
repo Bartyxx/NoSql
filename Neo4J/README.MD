@@ -120,12 +120,12 @@ sons the goods of the person became property of the country.<br/>
 
 There are two type of relationship:<br/>
 <ul>
-    <li>Generate : Relationship between parents and son/daughter</li>
+    <li><b>Generate</b> : Relationship between parents and son/daughter</li>
 </ul>
 
 <pre><i>CREATE(ROSIL01ISOLD09OL)-[g1:Generate {value: 1}]->(ROSIL11ISOLD09OL)</i></pre><br/>
 <ul>
-    <li>MarriesdWith: Marriage between two person</li>
+    <li><b>MarriedWith</b> : Marriage between two person</li>
 </ul>
 
 <pre><i>CREATE(ROSIL11ISOLD09OL)-[s1:MarriedWith {value: 0}]->(ROSILA1ISOLD09OL)</i></pre><br/>
