@@ -25,10 +25,10 @@
 An example of person is:<br/>
 
 <i>CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",<br/>
-       surname: "rossi",                     <br/>
-       id: "ROSIL01ISOLD09OL",               <br/>
-       status: "alive",                      <br/>
-       age: 90 })</i><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;       surname: "rossi",                     <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;       id: "ROSIL01ISOLD09OL",               <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;       status: "alive",                      <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;       age: 90 })</i><br/>
 
 Where ROSIL01ISOLD09OL is the unique key that identify the person, is the same
 of the id.<br/>
