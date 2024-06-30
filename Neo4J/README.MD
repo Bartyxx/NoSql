@@ -48,9 +48,9 @@ of the id.<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-<i>CREATE(bi0:b {name: "house in the Alps",<br/>
-                value: 500000,             <br/>
-				code:'bi0'})</i><br/>
+<pre><i>CREATE(bi0:b {name: "house in the Alps",
+                value: 500000,
+				code:'bi0'})</i></pre><br/>
 
 Where bi0 id the unique identification of the immobiar good<br/>
 
@@ -67,9 +67,9 @@ Where bi0 id the unique identification of the immobiar good<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-<i>CREATE(bm0:b {name: "alfa giulia",<br/>
-                value: 40000,        <br/>
-				code:'bm0'})</i><br/>
+<pre><i>CREATE(bm0:b {name: "alfa giulia",
+                value: 40000,
+				code:'bm0'})</i></pre><br/>
 
 
 Where bm0 id the unique identification of the mobiliar good<br/>
@@ -87,10 +87,10 @@ Where bm0 id the unique identification of the mobiliar good<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-CREATE(bm0:b {name: "alfa giulia",        <br/>
-CREATE(cc0:b {name: "bank account intesa",<br/>
-                value: 4000,              <br/>
-				code:'cc0'})</i><br/>
+
+<pre><i>CREATE(cc0:b {name: "bank account intesa",
+                value: 4000,
+				code:'cc0'})</i></pre><br/>
 
 Where cc0 id the unique identification of the bank account<br/>
 
