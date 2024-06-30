@@ -152,7 +152,7 @@ There is one type of relationship:<br/>
 <h2>Graph</h2><br/>
 
 An example of the graph created: 
-<p><img src = "https://github.com/Bartyxx/NoSql/tree/main/Neo4J/img"/></p>
+<p><img src = "https://github.com/Bartyxx/NoSql/tree/main/Neo4J/img/completeGraph.png"/></p>
 
 
 
