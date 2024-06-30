@@ -24,10 +24,10 @@
 
 An example of person is:<br/>
 
-<i>CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",
-       surname: "rossi",
-       id: "ROSIL01ISOLD09OL",
-       status: "alive",
+<i>CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",<br/>
+       surname: "rossi",                     <br/>
+       id: "ROSIL01ISOLD09OL",               <br/>
+       status: "alive",                      <br/>
        age: 90 })</i><br/>
 
 Where ROSIL01ISOLD09OL is the unique key that identify the person, is the same
@@ -48,8 +48,8 @@ of the id.<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-<i>CREATE(bi0:b {name: "house in the Alps",
-                value: 500000,
+<i>CREATE(bi0:b {name: "house in the Alps",<br/>
+                value: 500000,             <br/>
 				code:'bi0'})</i><br/>
 
 Where bi0 id the unique identification of the immobiar good<br/>
@@ -67,8 +67,8 @@ Where bi0 id the unique identification of the immobiar good<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-<i>CREATE(bm0:b {name: "alfa giulia",
-                value: 40000,
+<i>CREATE(bm0:b {name: "alfa giulia",<br/>
+                value: 40000,        <br/>
 				code:'bm0'})</i><br/>
 
 
@@ -87,9 +87,9 @@ Where bm0 id the unique identification of the mobiliar good<br/>
 -------------------------------------------------------------------------------
 <br/>
 
-CREATE(bm0:b {name: "alfa giulia",
-CREATE(cc0:b {name: "bank account intesa",
-                value: 4000,
+CREATE(bm0:b {name: "alfa giulia",        <br/>
+CREATE(cc0:b {name: "bank account intesa",<br/>
+                value: 4000,              <br/>
 				code:'cc0'})</i><br/>
 
 Where cc0 id the unique identification of the bank account<br/>
