@@ -140,7 +140,8 @@ There are two type of relationship:<br/>
 
 There is one type of relationship:<br/>
 <ul>
-    <li><b>Own</b> : The goods is own by a person.</li>
+    <li><b>Own</b> : The goods is own by a person, the value field is the % of
+                      the good own by the person.</li>
 </ul>
 
 <pre><i>CREATE(ROSIL01ISOLD09OL)-[:Owns {value: 100.00}]->(bi0)</i></pre><br/>
@@ -150,11 +151,8 @@ There is one type of relationship:<br/>
 <hr>
 <h2>Graph</h2><br/>
 
-
-
-
-
-
+An example of the graph created: 
+<p><img src = "https://github.com/Bartyxx/NoSql/tree/main/Neo4J/img"/></p>
 
 
 
@@ -166,8 +164,6 @@ There is one type of relationship:<br/>
 
 <h2>Decease family member</h2><br/>
 
-
-- Descrizione del database
 - Descrizione dei grafi (con immagini)
 - Mostrare cosa succede quando uno dei parenti muore e come vengono distribuite le proprieta
 - Capire perche comando non funziona.
