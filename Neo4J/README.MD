@@ -131,9 +131,13 @@ There are two type of relationship:<br/>
 
 <pre><i>CREATE(ROSIL11ISOLD09OL)-[s1:MarriedWith {value: 0}]->(ROSILA1ISOLD09OL)</i></pre><br/>
 
+
+<br/>
 -------------------------------------------------------------------------------
 <h4>Person to goods</h4><br/>
 -------------------------------------------------------------------------------
+<br/>
+
 There is one type of relationship:<br/>
 Own: The goods is own by a person.<br/>
 <pre><i>CREATE(ROSIL01ISOLD09OL)-[:Owns {value: 100.00}]->(bi0)</i></pre><br/>
