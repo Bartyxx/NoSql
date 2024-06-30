@@ -30,7 +30,7 @@ An example of person is:<br/>
        status: "alive",
        age: 90 })</i></pre><br/>
 
-Where ROSIL01ISOLD09OL is the unique key that identify the person, is the same
+Where <i>ROSIL01ISOLD09OL</i> is the unique key that identify the person, is the same
 of the id.<br/>
 
 <table>
@@ -52,7 +52,7 @@ of the id.<br/>
                 value: 500000,
 				code:'bi0'})</i></pre><br/>
 
-Where bi0 id the unique identification of the immobiar good<br/>
+Where <i>bi0</i> id the unique identification of the immobiar good<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
@@ -72,7 +72,7 @@ Where bi0 id the unique identification of the immobiar good<br/>
 				code:'bm0'})</i></pre><br/>
 
 
-Where bm0 id the unique identification of the mobiliar good<br/>
+Where <i>bm0</i> id the unique identification of the mobiliar good<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
@@ -92,7 +92,7 @@ Where bm0 id the unique identification of the mobiliar good<br/>
                 value: 4000,
 				code:'cc0'})</i></pre><br/>
 
-Where cc0 id the unique identification of the bank account<br/>
+Where <i>cc0</i> id the unique identification of the bank account<br/>
 
 <table>
 <caption>Immobiliar good attribute</caption>
@@ -108,28 +108,28 @@ Where cc0 id the unique identification of the bank account<br/>
 <br/>
 
 There is one country, if a person die and don't have any parents, siblings or
-sons the goods of the person became property of the country.
-CREATE(s:country {name:"italy"})
+sons the goods of the person became property of the country.<br/>
+<pre><i>CREATE(s:country {name:"italy"})</i></pre><br/>
 
 <!-- ---------------------------------------------------------------------- -->
 <h3>Relationship description</h3><br/>
-<!-- ---------------------------------------------------------------------- -->
+-------------------------------------------------------------------------------
 <h4>Person to person</h4><br/>
-<!-- ---------------------------------------------------------------------- -->
+-------------------------------------------------------------------------------
 
-There are two type of relationship:
-Generate : Relationship between parents and son/daughter.
-CREATE(ROSIL01ISOLD09OL)-[g1:Generate {value: 1}]->(ROSIL11ISOLD09OL)
+There are two type of relationship:<br/>
+Generate : Relationship between parents and son/daughter.<br/>
+<pre><i>CREATE(ROSIL01ISOLD09OL)-[g1:Generate {value: 1}]->(ROSIL11ISOLD09OL)</i></pre><br/>
 
-MarriesdWith: Marriage between two person
-CREATE(ROSIL11ISOLD09OL)-[s1:MarriedWith {value: 0}]->(ROSILA1ISOLD09OL)
+MarriesdWith: Marriage between two person<br/>
+<pre><i>CREATE(ROSIL11ISOLD09OL)-[s1:MarriedWith {value: 0}]->(ROSILA1ISOLD09OL)</i></pre><br/>
 
-<!-- ---------------------------------------------------------------------- -->
+-------------------------------------------------------------------------------
 <h4>Person to goods</h4><br/>
-<!-- ---------------------------------------------------------------------- -->
-There is one type of relationship:
-Own: The goods is own by a person.
-CREATE(ROSIL01ISOLD09OL)-[:Owns {value: 100.00}]->(bi0)
+-------------------------------------------------------------------------------
+There is one type of relationship:<br/>
+Own: The goods is own by a person.<br/>
+<pre><i>CREATE(ROSIL01ISOLD09OL)-[:Owns {value: 100.00}]->(bi0)</i></pre><br/>
 
 <br/>
 <br/>
