@@ -16,14 +16,15 @@ class Connection:
 def menu(connection:Connection):
     '''
 
-    Menu of the program.
-    It's possible to choose 4 option, after the selection the user need to 
-    insert the id of the interested person, the option are:
-        a - To show the property of the interested person.
-        b - To show the nearest parents in life of the interested person.
-        c - To change the status of the interested person from live to death.
-            it also change the goods property to the parents shown in point b.
-        any other key - to exit from the program.
+    Menu of the program:
+    It is possible to choose from 4 options. After the selection, the user 
+    needs to insert the ID of the interested person. The options are:
+        a - To show the properties of the interested person.
+        b - To show the nearest living relatives of the interested person.
+        c - To change the status of the interested person from alive to 
+            deceased. This also transfers the properties to the relatives 
+            shown in point b.
+        any other key - To exit from the program.
 
     '''
     
@@ -57,9 +58,9 @@ def menu(connection:Connection):
 def possessions(connect:Connection):
     '''
     
-    This function show all the property of the iterested person. The cypher 
-    query return name and value of the goods(a.name, a.value) and the 
-    connection from the interested person to the goods(r.value).
+    This function shows all the properties of the interested person. The cypher 
+    query returns the name and value of the goods (a.name, a.value) and the 
+    connection from the interested person to the goods (r.value).
     
     '''
     
@@ -99,26 +100,27 @@ def possessions(connect:Connection):
 def relatives(person_fromc, isfromc):
     '''
     
-    This function show the nearest parents alive parents of the interested 
-    person, the parents shown are the one who are going to inherit the goods
-    if the person pass away.
+    This function shows the nearest living relatives of the interested person.
+    These relatives are the ones who will inherit the goods if the person 
+    passes away.
     It's possible to look at the succession rules in the file:
     'Regole di successione con query cypher.txt'
     
-    The cypher query used are 3:
-    consort -> return name and surname of the consort (a.name, a.surname) and
+    The cypher queries used are 3:
+    consort -> returns the name and surname of the consort (a.name, a.surname) and
                the name of the interested person (p.consort).
-    sons    -> retunr name, surname, id off all the sons (a.name, 
-               a.surname, a.id) and the name of the interested person (p.consort)
-    parbro -> return name, surname, id of the parents (a.name, 
-              a.surname, a.id), name, surname, id of the siblings 
-              (b.name, b.surname, b.id), name of the interested persone (p.name).
-              
-    This function it's also used in the departure function to control the
-    nearest ereditors in life. It's passed a variable name isfromc, if the 
-    variable is True it means that the function it's used in the departure 
-    function, if it's false the function it's called by the users in the menu.
-    In the first case the variable person is the same of the c function.
+    sons    -> returns the name, surname, and ID of all the sons (a.name, 
+               a.surname, a.id) and the name of the interested person (p.consort).
+    parbro  -> returns the name, surname, and ID of the parents (a.name, 
+               a.surname, a.id), the name, surname, and ID of the siblings 
+               (b.name, b.surname, b.id), and the name of the interested person (p.name).
+                  
+    This function is also used in the departure function to identify the 
+    nearest living heirs. A variable named isfromc is passed; if the variable 
+    is True, it means that the function is used in the departure function. 
+    If it is False, the function is called by the users in the menu.
+    In the first case, the variable person is the same as in the c function.
+
         
     '''
         
@@ -198,16 +200,19 @@ def relatives(person_fromc, isfromc):
 def departure():
     '''
     
-    This function calculate the ereditor in case of the departure of a person.
-    The succession rule are the same of the parents function, so the parent
-    function it's called to decide the ereditors and the variable isfromc is
+    This function calculates the heirs in case of the departure of a person.
+    The succession rules are the same as in the parents function, so the 
+    parents 
+    function is called to determine the heirs, and the variable isfromc is 
     passed.
-    The cypher query return name, code and value of the goods (a.name, a.code, 
-    a.value), the value in percentage of the goods (r.value) and the name of
-    the interested person(p.name).
+    The cypher query returns the name, code, and value of the goods 
+    (a.name, a.code, 
+    a.value), the value in percentage of the goods (r.value), and the name of 
+    the interested person (p.name).
     
-    If a person dosn't have any ereditor than the goods are assign to the 
-    State.
+    If a person doesn't have any heirs, then the goods are assigned to 
+    the State.
+
     
     '''
     
@@ -259,15 +264,15 @@ def departure():
 
     else:
         print(f"{i['p.name']} Didn't have any goods")
-    session.run("match(p: p {id:'" + str(person) + "'}) set p.status = 'dead'")
+    session.run("match(p: p {id:'" + str(person) + "'}) set p.status = 'deceased'")
 
 # ============================================================================
 def arrange_query_person(a: iter) -> dict:
     '''
-       :param a:iter(result of a neo4j query)
-       :return: dict of person
-       
-    Given a neo4j object in return a dict.
+    :param a: iter (result of a Neo4j query)
+    :return: dict of person
+    
+    Given a Neo4j object, it returns a dict.
     '''
     
     l = {}
@@ -282,14 +287,15 @@ def arrange_query_person(a: iter) -> dict:
 def control_id(person, counter):
     '''
     
-    This function is used in the three main function to control(when the fiscal
-    code is asked):
-    - id len.
-    - existence of the id.
-    - presente of equal id.
-    
-    Then in case of Error gives to possibility at the users to exit from the
-    progrm or of return to the menu.
+    This function is used in the three main functions to check (when the fiscal
+    code is required):
+        - ID length.
+        - Existence of the ID.
+        - Presence of duplicate IDs.
+        
+    In case of an error, it gives the user the option to exit the program or 
+    return to the menu.
+
     
     '''
     
@@ -325,18 +331,18 @@ def control_id(person, counter):
 def initialize_id():
     '''
     
-    This function is used in the three main function for asking the id.
-    After the insertion of the id it's checkd with the control_id
-    function.
+    This function is used in the three main functions for asking the ID.
+    After the insertion of the ID, it is checked with the control_id function.
     
     RETURN:
-        - id               -> id inserted
-        - counter          -> in case there is more than one persone with the 
-                              same id.
-        - iterable_results -> the iteration of the query.
-        - i                -> the last value in iterable_result, if the query
-                              is empty i is assigned to 0.
-        - result -         > the cypher query.
+        - id               -> ID inserted.
+        - counter          -> In case there is more than one person with the 
+                              same ID.
+        - iterable_results -> The iteration of the query.
+        - i                -> The last value in iterable_results; if the query
+                              is empty, i is assigned to 0.
+        - result           -> The cypher query.
+
     
     '''
     
@@ -367,11 +373,12 @@ def initialize_id():
 def initialize_id_c(person):
     '''
     
-    Same of the initialize_id function but dosn't return person.
-    It's not possibile to use initialize_id because ask for the id, but the 
-    function initialize_id as been already called when the users choose the c
-    function so another fuction for initialize the id is needed without to ask
-    for the id.
+    Similar to the initialize_id function but does not return the person.
+    It is not possible to use initialize_id because it asks for the ID, but the 
+    initialize_id function has already been called when the user chooses the c 
+    function. Therefore, another function to initialize the ID is needed 
+    without asking for the ID again.
+
 
     '''
     
@@ -397,9 +404,10 @@ def initialize_id_c(person):
 def function_heirs(query):
     '''
     
-    It's used in the relatives function for iterate the list of the heirs.
+    It is used in the relatives function to iterate through the list of heirs.
     
-    RETURN a list with the heirs.
+    RETURN: A list with the heirs.
+
 
     '''
     
@@ -421,19 +429,20 @@ def to_list(f_heirs, control, i):
     Parameters
     ----------
     f_heirs : list
-        The list contain the heirs, it's transformed from a neo4j object to a 
-        list in the function_heirs function.
+        The list containing the heirs, transformed from a Neo4j object to a list 
+        in the function_heirs function.
     control : str
-        A string with the type of control we are checking at, it can be consrot,
-        sons and parbro.
-    i : value
-        The actual value of the iteration in iterable_result in the function 
-        initialize_id.
-
+        A string indicating the type of control being checked, which can be consort,
+        sons, or parbro.
+    i : int
+        The current value of the iteration in iterable_result in the initialize_id 
+        function.
+    
     Returns
     -------
     list_heirs : list
         A list with the heirs.
+
 
     '''    
 
@@ -477,8 +486,9 @@ def to_list(f_heirs, control, i):
 def final_control():
     '''
     
-    The final message of the program, if 0 is pressed the program return in
-    the menu, if any others key is pressed exit the program.
+    The final message of the program: if '0' is pressed, the program returns to 
+    the menu; if any other key is pressed, the program exits.
+
 
     '''
     print("\t")
