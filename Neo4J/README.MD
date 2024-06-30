@@ -17,9 +17,12 @@
 <tr><td>s        </td><td>Contry            </td></tr>
 </table>
 
+<br/>
 -------------------------------------------------------------------------------
 <h4>Person(p)</h4>
 -------------------------------------------------------------------------------
+<br/>
+
 An example of person is:
 
 CREATE(ROSIL01ISOLD09OL:p {name:"astolfo",
@@ -40,10 +43,13 @@ of the id.
 <tr><td>status   </td><td>Alive or deceased                 </td></tr>
 <tr><td>age      </td><td>Age                               </td></tr>
 </table>
-     
+   
+<br/>  
 -------------------------------------------------------------------------------
 <h4>Immobial good(bi)</h4><br/>
 -------------------------------------------------------------------------------
+<br/>
+
 CREATE(bi0:b {name: "house in the Alps",
                 value: 500000,
 				code:'bi0'})
@@ -58,9 +64,11 @@ Where bi0 id the unique identification of the immobiar good
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
 </table>
 
+<br/>
 -------------------------------------------------------------------------------
 <h4>Mobiliar good(bm)</h4><br/>
 -------------------------------------------------------------------------------
+<br/>
 
 CREATE(bm0:b {name: "alfa giulia",
                 value: 40000,
@@ -77,10 +85,12 @@ Where bm0 id the unique identification of the mobiliar good
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
 </table>
 
-
+<br/>
 -------------------------------------------------------------------------------
 <h4>Bank account(cc)</h4><br/>
 -------------------------------------------------------------------------------
+<br/>
+
 CREATE(cc0:b {name: "bank account intesa",
                 value: 4000,
 				code:'cc0'})
@@ -95,10 +105,12 @@ Where cc0 id the unique identification of the bank account
 <tr><td>code     </td><td>Same code as the unique identification </td></tr>
 </table>
 
-
+<br/>
 -------------------------------------------------------------------------------
 <h4>Country(s)</h4><br/>
 -------------------------------------------------------------------------------
+<br/>
+
 There is one country, if a person die and don't have any parents, siblings or
 sons the goods of the person became property of the country.
 CREATE(s:country {name:"italy"})
