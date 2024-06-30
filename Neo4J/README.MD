@@ -1,6 +1,7 @@
 <!-- ---------------------------------------------------------------------- -->
 <h1>Notaril support in Neo4J</h1>
 <!-- ---------------------------------------------------------------------- -->
+<hr>
 <h2>Dataset</h2>
 <i>Neo_DB.txt</i> --> Dataset used for the notaril support. The dataset is 
                       created by the work team.<br/><br/>
@@ -139,6 +140,7 @@ Own: The goods is own by a person.<br/>
 
 <br/>
 <br/>
+<hr>
 <h2>Graph</h2><br/>
 
 
