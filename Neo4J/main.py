@@ -240,9 +240,9 @@ def departure():
                 percent_own_ereditors = round(items['r.value'] / len(heirs),2)
                 try:
                     for heirs in heirs:
-                        query="create (" + str(heirs['id']) + ":p)\
-                              -[:Owns{value:" + str(percent_own_ereditors) + "\
-                               }]->("+items['a.code']+":b)"
+                        #query = "create (" + str(heirs['id']) + ":p)-[:Owns{value:" + str(percent_own_ereditors) + "}]->("+items['a.code']+":b)"
+                        #query = "CREATE (" + str(heirs['id']) + ":p)-[:Owns {value: " + str(percent_own_ereditors) + "}]->(" + str(items['a.code']) + ":b)"
+                        query = "CREATE (" + str(heirs['id']) + ":p)-[:Owns {value: " + str(percent_own_ereditors) + "}]->(" + str(items['a.code']) + ":b)"
                         session.run(query)
                         print(f"The goods {items['a.name']} will be inherited " 
                               f"by {heirs['name']} {heirs['surname']} for the " 
