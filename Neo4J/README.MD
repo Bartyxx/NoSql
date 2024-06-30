@@ -139,7 +139,10 @@ There are two type of relationship:<br/>
 <br/>
 
 There is one type of relationship:<br/>
-Own: The goods is own by a person.<br/>
+<ul>
+    <li><b>Own</b> : The goods is own by a person.</li>
+</ul>
+
 <pre><i>CREATE(ROSIL01ISOLD09OL)-[:Owns {value: 100.00}]->(bi0)</i></pre><br/>
 
 <br/>
