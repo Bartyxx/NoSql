@@ -1,22 +1,22 @@
 <!-- ---------------------------------------------------------------------- -->
-<h1>Notaril support in Neo4J</h1><br/>
+<h1>Notaril support in Neo4J</h1>
 <!-- ---------------------------------------------------------------------- -->
-<h2>Dataseet</h2><br/>
+<h2>Dataset</h2>
 <i>Neo_DB.txt</i> --> Dataset used for the notaril support. The dataset is created by the work team.<br/>
 
-<h3>Element description</h3><br/>
+<h3>Element description</h3>
 
 <table>
 <caption>The dataset is composed by five type of data</caption>
 <tr><td><b>ID</b></td><td><b>Type</b>       </td></tr>
 <tr><td>p        </td><td>Person            </td></tr>
-<tr><td>bi       </td><td>Immobiliare goods </td></tr>
+<tr><td>bi       </td><td>Immobiliar goods </td></tr>
 <tr><td>bm       </td><td>Mobiliar goods    </td></tr>
 <tr><td>cc       </td><td>Bank Account      </td></tr>
 <tr><td>s        </td><td>Contry            </td></tr>
 </table>
 <!-- ---------------------------------------------------------------------- -->
-<h4>Person(p)</h4><br/>
+<h4>Person(p)</h4>
 <!-- ---------------------------------------------------------------------- -->
 An example of person is:
 
