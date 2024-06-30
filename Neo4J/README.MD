@@ -153,7 +153,7 @@ There is one type of relationship:<br/>
 
 An example of the graph created: <br/>
 <p><img src = "https://github.com/Bartyxx/NoSql/tree/main/Neo4J/img/completeGraph.png"/></p>
-
+<p><img src = "https://github.com/Bartyxx/PCA16Personality/blob/main/image/personality_test_answer.png"/></p>
 <br/>
 
 
