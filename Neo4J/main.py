@@ -1,7 +1,30 @@
+"""
+-------------------------------------------------------------------------------
+                                  main.py
+-------------------------------------------------------------------------------
+Notaril support project in python&neo4j.
+Connect to a Neo4j database and execute a series of operation for control
+the status on the ineritance of goods of a family.
+"""
 from neo4j import GraphDatabase
 
 class Connection:
     def __init__(self, neo4j_uri, neo4j_username, neo4j_password):
+        """
+        Parameters
+        ----------
+        neo4j_uri : STR
+            Databse uri.
+        neo4j_username : STR
+            Username for access the database.
+        neo4j_password : STR
+            Password of the database.
+
+        Returns
+        -------
+        Connection or disconnection to the database.
+        """
+        
         print(f"Connecting to the database {neo4j_uri}....")
         self.driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_username, \
                                                             neo4j_password))
@@ -10,23 +33,20 @@ class Connection:
     def close(self):
         if self.driver:
             self.driver.close()
-            print(f"Sconnected to the database {self.driver}.")
+            print(f"Disconnect to the database {self.driver}.")
 
 # ============================================================================
 def menu(connection:Connection):
-    '''
+    """
+        Parameters
+    ----------
+    connection : Connection
+        Class connection with the connection instruction.
 
-    Menu of the program:
-    It is possible to choose from 4 options. After the selection, the user 
-    needs to insert the ID of the interested person. The options are:
-        a - To show the properties of the interested person.
-        b - To show the nearest living relatives of the interested person.
-        c - To change the status of the interested person from alive to 
-            deceased. This also transfers the properties to the relatives 
-            shown in point b.
-        any other key - To exit from the program.
-
-    '''
+    Returns
+    -------
+    None.
+    """
     
     driver = connection.driver
     isfromc = False
@@ -56,13 +76,16 @@ def menu(connection:Connection):
 
 # ============================================================================
 def possessions(connect:Connection):
-    '''
-    
-    This function shows all the properties of the interested person. The cypher 
-    query returns the name and value of the goods (a.name, a.value) and the 
-    connection from the interested person to the goods (r.value).
-    
-    '''
+    """
+        Parameters
+    ----------
+    connection : Connection
+        Class connection with the connection instruction.
+
+    Returns
+    -------
+    None
+    """
     
     driver = connect.driver
     session = driver.session()
@@ -98,31 +121,26 @@ def possessions(connect:Connection):
         
 # ============================================================================
 def relatives(person_fromc, isfromc):
-    '''
-    
-    This function shows the nearest living relatives of the interested person.
-    These relatives are the ones who will inherit the goods if the person 
-    passes away.
-    It's possible to look at the succession rules in the file:
-    'Regole di successione con query cypher.txt'
-    
-    The cypher queries used are 3:
-    consort -> returns the name and surname of the consort (a.name, a.surname) and
-               the name of the interested person (p.consort).
-    sons    -> returns the name, surname, and ID of all the sons (a.name, 
-               a.surname, a.id) and the name of the interested person (p.consort).
-    parbro  -> returns the name, surname, and ID of the parents (a.name, 
-               a.surname, a.id), the name, surname, and ID of the siblings 
-               (b.name, b.surname, b.id), and the name of the interested person (p.name).
-                  
-    This function is also used in the departure function to identify the 
-    nearest living heirs. A variable named isfromc is passed; if the variable 
-    is True, it means that the function is used in the departure function. 
-    If it is False, the function is called by the users in the menu.
-    In the first case, the variable person is the same as in the c function.
+    """
+        Parameters
+    ----------
+    person_fromc : STR
+        Always ""
+    isfromc : BOOLEAN
+        FALSE : Function called in the menu.
+        TRUE  : Function called in departure function.
+
+    Returns
+    -------
+    list_heirs : LIST
+        List of the heirs of person.
 
         
-    '''
+    Shows the nearest living relatives of the person. These relatives are the 
+    ones who will inherit the goods if the person passes away.
+    Used in the departure function to identify the nearest living heirs. 
+           
+    """
         
     if isfromc == False:
         person, counter, iterable_result, i, result = initialize_id()
@@ -134,8 +152,11 @@ def relatives(person_fromc, isfromc):
         control_id(person, counter)
         printv = False
         
+    # Returns the name and surname of the consort
     query_consort = "MATCH (p:p{id:'"+ str(person)+"'})-[:SposatoCon]-(a) RETURN a.name, a.surname, p.name"
+    # Returns the name, surname, and ID of all the sons
     query_sons = "MATCH (p:p{id:'"+ str(person)+"'})-[:Generate]->(a) RETURN a.name, a.surname, a.id, p.name"
+    # Returns the name, surname, and ID of the parents
     query_parbro = "MATCH(p:p{id:'" + str(person)+"'})<-[:Generate]-(a:p)-[:Generate]->(b:p) RETURN a.name, a.surname, a.id, p.name,b.name, b.surname, b.id"
     
     control = "consort"
@@ -198,13 +219,12 @@ def relatives(person_fromc, isfromc):
     
 # ============================================================================
 def departure():
-    '''
+    """
     
-    This function calculates the heirs in case of the departure of a person.
+    Calculates the heirs in case of the departure of a person.
     The succession rules are the same as in the parents function, so the 
-    parents 
-    function is called to determine the heirs, and the variable isfromc is 
-    passed.
+    parents function is called to determine the heirs, and the variable isfromc
+    is passed.
     The cypher query returns the name, code, and value of the goods 
     (a.name, a.code, 
     a.value), the value in percentage of the goods (r.value), and the name of 
@@ -214,7 +234,7 @@ def departure():
     the State.
 
     
-    '''
+    """
     
     driver = connect.driver
     session = driver.session()
@@ -222,60 +242,57 @@ def departure():
     person, counter, iterable_result, i, result = initialize_id()
     control_id(person, counter)
     
-
-    query_string = 'MATCH(p:p{id:"' + str(i[0]) + '"})-[r: Owns]->(a) RETURN a.name,a.code, a.value, r.value, p.name'
-    
+    query_string = f'MATCH(p:p {{id:"{i[0]}"}})-[r:Owns]->(a) RETURN a.name, a.code, a.value, r.value, p.name'
     result_possession = session.run(query_string)
-    iter_possession = iter(result_possession)
-    possessions = list()
-    
-    for i in iter_possession:
-        possessions.append(i)
+    possessions = list(result_possession)
 
-    if len(possessions):
+    if possessions:
         isfromc = True
         heirs = relatives(person, isfromc)
-        if len(heirs)!=0:
+        if heirs:
             for items in possessions:
-                percent_own_ereditors = round(items['r.value'] / len(heirs),2)
+                percent_own_ereditors = round(items['r.value'] / len(heirs), 2)
                 try:
-                    for heirs in heirs:
-                        #query = "create (" + str(heirs['id']) + ":p)-[:Owns{value:" + str(percent_own_ereditors) + "}]->("+items['a.code']+":b)"
-                        #query = "CREATE (" + str(heirs['id']) + ":p)-[:Owns {value: " + str(percent_own_ereditors) + "}]->(" + str(items['a.code']) + ":b)"
-                        query = "CREATE (" + str(heirs['id']) + ":p)-[:Owns {value: " + str(percent_own_ereditors) + "}]->(" + str(items['a.code']) + ":b)"
-                        session.run(query)
+                    for heir in heirs:
+                        query = """
+                        CREATE (a:p {id: $heirs_id})-[:Possiede {value: $percent_own_ereditors}]->(b:b {code: $items_code})
+                        """
+                        session.run(query, heirs_id=heir['id'], percent_own_ereditors=percent_own_ereditors, items_code=items['a.code'])
                         print(f"The goods {items['a.name']} will be inherited " 
-                              f"by {heirs['name']} {heirs['surname']} for the " 
+                              f"by {heir['name']} {heir['surname']} for the " 
                               f"{round(percent_own_ereditors, 2)}% of "
-                              f"is value, so {items['a.value']/len(heirs)}€")
+                              f"its value, so {round(items['a.value'] * percent_own_ereditors / 100, 2)}€")
                 except KeyError:
-                    print("")
+                    print("KeyError encountered.")
         else:
-            print(f"{i['p.name']} did not have any heirs, the goods "
-                  f"will go to the State")
+            print(f"{i['p.name']} did not have any heirs, the goods will go to the State")
             for items in possessions:
-                query = "create (s:country {name:'italy'})-[:Owns\
-                {value:" + items['r.value'] + "}]->("+items['a.code'] + ":b)"
-                session.run(query)
+                query = """
+                CREATE (s:country {name: 'Italy'})-[:Owns {value: $value}]->(b:b {code: $items_code})
+                """
+                session.run(query, value=items['r.value'], items_code=items['a.code'])
                 print(
-                    f"The goods {items['a.name']} will be inherit by the italian "
-                    f"State, for the {items['r.value']}% correspond to,"
+                    f"The goods {items['a.name']} will be inherited by the Italian "
+                    f"State, for the {items['r.value']}% corresponding to, "
                     f"{items['a.value']}€")
-
     else:
-        print(f"{i['p.name']} Didn't have any goods")
-    session.run("match(p: p {id:'" + str(person) + "'}) set p.status = 'deceased'")
+        print(f"{i['p.name']} didn't have any goods")
 
 # ============================================================================
 def arrange_query_person(a: iter) -> dict:
-    '''
-    
-    :param a: iter (result of a Neo4j query)
-    :return: dict of person
+    """
+        Parameters
+    ----------
+    a : iter : NEO4J
+        Result of a Neo4j query
+
+    Returns
+    -------
+    l : DICTIONARY
+     Transform the Neo4j object in a dictionary.  
     
     Given a Neo4j object, it returns a dict.
-    
-    '''
+    """
     
     l = {}
     c = 0
@@ -287,19 +304,24 @@ def arrange_query_person(a: iter) -> dict:
 
 # ============================================================================
 def control_id(person, counter):
-    '''
-    
-    This function is used in the three main functions to check (when the fiscal
-    code is required):
-        - ID length.
-        - Existence of the ID.
-        - Presence of duplicate IDs.
+    """
+        Parameters
+    ----------
+    person : STR
+        Id of the person
+    counter : BOOLEAN
+        0 = No person with this id is alive.
+        1 = A person with this id is alive.
+        
+    Returns
+    -------
+    ERROR
+        If the id is wrong or the person is death returns error.
+
         
     In case of an error, it gives the user the option to exit the program or 
-    return to the menu.
-
-    
-    '''
+    return to the menu.   
+    """
     
     if len(person) != 16:
         print("The id must be of length 16.")
@@ -331,12 +353,13 @@ def control_id(person, counter):
 
 # ============================================================================
 def initialize_id():
-    '''
+    """
     
     This function is used in the three main functions for asking the ID.
     After the insertion of the ID, it is checked with the control_id function.
     
-    RETURN:
+    Returns
+    -------
         - id               -> ID inserted.
         - counter          -> In case there is more than one person with the 
                               same ID.
@@ -346,7 +369,7 @@ def initialize_id():
         - result           -> The cypher query.
 
     
-    '''
+    """
     
     driver = connect.driver
     session = driver.session()
@@ -373,16 +396,24 @@ def initialize_id():
   
 # ============================================================================      
 def initialize_id_c(person):
-    '''
-    
+    """
+    Parameters
+    ----------
+    person : STR
+        Id of the person.
+
+    Returns
+    -------
+        - counter          -> In case there is more than one person with the 
+                              same ID.
+        - iterable_results -> The iteration of the query.
+        - i                -> The last value in iterable_results; if the query
+                              is empty, i is assigned to 0.
+        - result           -> The cypher query.
+        
     Similar to the initialize_id function but does not return the person.
-    It is not possible to use initialize_id because it asks for the ID, but the 
-    initialize_id function has already been called when the user chooses the c 
-    function. Therefore, another function to initialize the ID is needed 
-    without asking for the ID again.
 
-
-    '''
+    """
     
     driver = connect.driver
     session = driver.session()
@@ -404,14 +435,22 @@ def initialize_id_c(person):
 
 # ============================================================================
 def function_heirs(query):
-    '''
+    """
+    Parameters
+    ----------
+    query : QUERY
+        Neo4J query.
+
+    Returns
+    -------
+    listheirs : LIST
+        List of heirs of the person.
     
     It is used in the relatives function to iterate through the list of heirs.
-    
-    RETURN: A list with the heirs.
 
 
-    '''
+
+    """
     
     driver = connect.driver
     session = driver.session()
@@ -426,27 +465,24 @@ def function_heirs(query):
 
 # ============================================================================
 def to_list(f_heirs, control, i):
-    '''
-    
+    """
     Parameters
     ----------
-    f_heirs : list
-        The list containing the heirs, transformed from a Neo4j object to a list 
-        in the function_heirs function.
-    control : str
-        A string indicating the type of control being checked, which can be consort,
-        sons, or parbro.
-    i : int
-        The current value of the iteration in iterable_result in the initialize_id 
-        function.
+    f_heirs : LIST
+        The list containing the heirs, transformed from a Neo4j object to a 
+        list in the function_heirs function.
+    control : STR
+        A string indicating the type of control being checked, which can be 
+        consort, sons, or parbro.
+    i : INT
+        The current value of the iteration in iterable_result in the 
+        initialize_id function.
     
     Returns
     -------
-    list_heirs : list
-        A list with the heirs.
-
-
-    '''    
+    list_heirs : LIST
+        List with the heirs.
+    """    
 
     if control == "consort":
         iterable_heirs = iter(f_heirs)
@@ -486,13 +522,11 @@ def to_list(f_heirs, control, i):
 
 # ============================================================================
 def final_control():
-    '''
+    """
+    The final message of the program: if '0' the program returns to the menu; 
+    if any other key is pressed, the program exits.
+    """
     
-    The final message of the program: if '0' is pressed, the program returns to 
-    the menu; if any other key is pressed, the program exits.
-
-
-    '''
     print("\t")
     print("=" * 100)
     print("Press 0 for exit or every other key to reach the menu")
@@ -513,3 +547,13 @@ if __name__ == '__main__':
     connect=Connection(neo4j_uri,neo4j_username,neo4j_password)
     menu(connect)
 
+    """
+    Usefoul command for delete a database:
+    // Cancella tutte le relazioni
+    MATCH ()-[r]->()
+    DELETE r;
+
+    // Cancella tutti i nodi
+    MATCH (n)
+    DELETE n;
+    """

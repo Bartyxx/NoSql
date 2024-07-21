@@ -160,14 +160,3 @@ An example of the graph created: <br/>
 </ul>
 
 <br/>
-
-
-
-
-
-
-
-<h2>Decease family member</h2><br/>
-
-- Mostrare cosa succede quando uno dei parenti muore e come vengono distribuite le proprieta
-- Capire perche comando non funziona.
